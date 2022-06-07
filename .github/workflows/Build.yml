@@ -3,8 +3,6 @@ name: Build
 
 # 控制工作流何时运行
 on:
-  push:
-  pull_request:
   workflow_dispatch:
 
 # 工作流运行由一个或多个可以按顺序或并行运行的作业组成
