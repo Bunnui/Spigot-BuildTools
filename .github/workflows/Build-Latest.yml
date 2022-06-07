@@ -1,5 +1,5 @@
 # 这是帮助您开始操作的基本工作流
-name: CI
+name: Build-Latest
 
 # 控制工作流何时运行
 on:
