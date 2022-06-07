@@ -1,0 +1,60 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # 获取构建工具
+      - name: "BuildTools"
+        run: "curl https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar -o ./BuildTools.jar"
+      
+      # Java环境
+      - name: "Setting up Java Development Kit"
+        uses: "actions/setup-java@v2.1.0"
+        with:
+          distribution: "adopt"
+          java-version: "17"
+          
+      # 使用 BuildTools 构建Spigot
+      - name: "Building Spigot"
+        # 将设置BuildTools为最新版本
+        run: "java -jar BuildTools.jar --rev latest"
+      
+      # 上载构建jar文件
+      - name: "Uploading Build"
+        uses: "actions/upload-artifact@v2"
+        with:
+          name: "Spigot"
+          path: "./spigot*.jar"
+        
+      - name: "Getting Current Date"
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - name: "Creating Release"
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          title: "Nightly Spigot ${{ steps.date.outputs.date }}"
+          automatic_release_tag: "${{ steps.date.outputs.date }}"
+          files: |
+            ./spigot*.jar
