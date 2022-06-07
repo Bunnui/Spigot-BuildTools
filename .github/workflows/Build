@@ -1,5 +1,5 @@
 # 这是帮助您开始操作的基本工作流
-name: CI
+name: Build
 
 # 控制工作流何时运行
 on:
@@ -32,29 +32,29 @@ jobs:
           java-version: "17"
       
       # 下载Spigot构建工具(BuildTools.jar)
-      - name: "下载BuildTools"
+      - name: "Download BuildTools"
         run: "curl https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar -o ./BuildTools.jar"
         
       # 运行Spigot构建工具
-      - name: "构建Spigot"
+      - name: "Building Spigot"
         env: 
           REV: ${{ secrets.REV }}
         run: "java -jar BuildTools.jar --rev ${REV}"
 
       # 上传已构建的 jar 文件
-      - name: "上传构建工件"
+      - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.0
         with:
           name: "Spigot"
           path: "./spigot*.jar"
           
       # 获取当前日期
-      - name: "获取当前日期"
+      - name: "Getting Current Date"
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
       # 创建发布
-      - name: "创建发布"
+      - name: "Creating Release"
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
