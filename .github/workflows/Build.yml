@@ -27,7 +27,10 @@ jobs:
       # 设置 Java JDK
       - name: Setup Java JDK
         uses: actions/setup-java@v3.3.0
-
+        with:         
+          distribution: "adopt"
+          java-version: "17"
+      
       # 下载Spigot构建工具(BuildTools.jar)
       - name: "Download BuildTools"
         run: "curl https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar -o ./BuildTools.jar"
