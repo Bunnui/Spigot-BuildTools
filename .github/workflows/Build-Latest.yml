@@ -51,6 +51,6 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           title: "Build Latest Spigot ${{ steps.date.outputs.date }}"
-          automatic_release_tag: "BuildLatest${{ steps.date.outputs.date }}"
+          automatic_release_tag: "${{ steps.date.outputs.date }}BuildLatest"
           files: |
             ./spigot*.jar
