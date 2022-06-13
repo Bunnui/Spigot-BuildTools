@@ -53,6 +53,6 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           title: "Build Spigot ${{ steps.date.outputs.date }}"
-          automatic_release_tag: "Build${{ steps.date.outputs.date }}"
+          automatic_release_tag: "${{ steps.date.outputs.date }}Build"
           files: |
             ./spigot*.jar
