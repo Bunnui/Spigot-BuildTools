@@ -7,8 +7,8 @@ on:
   #   branches: [ "main" ]
   # pull_request:
   #   branches: [ "main" ]
-  schedule:
-  - cron: "0 2 * * 1-5"
+  #schedule:
+  #- cron: "0 2 * * 1-5"
 
   # 允许您从 "操作" 选项卡手动运行此工作流程
   workflow_dispatch:
