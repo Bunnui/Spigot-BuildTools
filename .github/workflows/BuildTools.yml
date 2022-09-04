@@ -44,10 +44,10 @@ jobs:
       - name: "Getting Current Date"
         id: date
         run: |
-          fullfilename=find -type f -name './spigot*.jar'|xargs grep 'GroupRecord'
+          fullfilename=$(ls ./spigot*.jar)
           filename=$(basename "$fullfilename")
           echo "::set-output name=date::$filename"
-        
+          
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.0
         with:
