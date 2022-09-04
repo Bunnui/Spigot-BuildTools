@@ -1,0 +1,42 @@
+name: Build-Latest
+
+# 控制工作流何时运行
+on:
+  # 在推送或拉取请求事件上触发工作流，但仅针对 "main" 分支
+  # push:
+  #   branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
+  schedule:
+  - cron: "0 2 * * 1-5"
+
+  # 允许您从 "操作" 选项卡手动运行此工作流程
+  workflow_dispatch:
+
+# 工作流运行由一个或多个可以按顺序或并行运行的作业组成
+jobs:
+  # 此工作流包含一个名为 "build" 的作业
+  build:
+    # 运行的系统
+    runs-on: ubuntu-latest
+
+    # 步骤表示将作为作业的一部分执行的一系列任务
+    steps:
+      # 在 $GITHUB_WORKSPACE 下签出您的存储库，以便您的工作可以访问它
+      - uses: actions/checkout@v3
+
+      # 下载Spigot构建工具(BuildTools.jar)
+      - name: "Download BuildTools"
+        run: "curl https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar -o ./BuildTools.jar"
+        
+      # 运行Spigot构建工具
+      - name: "Building Spigot"
+        run: "java -jar BuildTools.jar --rev latest"
+        
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          # 工件名称
+          name: ./spigot*.jar
+          # 描述上传内容的文件、目录或通配符模式
+          path: ./spigot*.jar
