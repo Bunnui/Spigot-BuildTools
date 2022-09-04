@@ -22,6 +22,14 @@ jobs:
 
     # 步骤表示将作为作业的一部分执行的一系列任务
     steps:
+    
+      # 设置 Java JDK
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3.3.0
+        with:         
+          distribution: "adopt"
+          java-version: "17"
+          
       # 在 $GITHUB_WORKSPACE 下签出您的存储库，以便您的工作可以访问它
       - uses: actions/checkout@v3
 
