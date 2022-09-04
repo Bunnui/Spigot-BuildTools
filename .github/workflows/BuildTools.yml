@@ -39,6 +39,7 @@ jobs:
         
       # 运行Spigot构建工具
       - name: "Building Spigot"
+        id: filename
         run: |
           "java -jar BuildTools.jar --rev latest"
           path=$("./spigot*.jar")
