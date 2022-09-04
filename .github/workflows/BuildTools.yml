@@ -42,16 +42,16 @@ jobs:
         run: "java -jar BuildTools.jar --rev latest"
         
       - name: "Getting Current Date"
-        id: date
+        id: data
         run: |
           fullfilename=$(ls ./spigot*.jar)
           filename=$(basename "$fullfilename")
-          echo "::set-output name=date::$filename"
+          echo "::set-output name=data::$filename"
           
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.0
         with:
           # 工件名称
-          name: ${{ steps.date.outputs.date }}
+          name: ${{ steps.date.outputs.data }}
           # 描述上传内容的文件、目录或通配符模式
           path: ./spigot*.jar
