@@ -1,4 +1,4 @@
-name: Build-Latest
+name: BuildTools
 
 # 控制工作流何时运行
 on:
