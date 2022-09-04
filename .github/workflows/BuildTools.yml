@@ -44,7 +44,7 @@ jobs:
       - name: "Getting Current Date"
         id: date
         run: |
-          fullfilename="./spigot*.jar"
+          fullfilename=find -type f -name './spigot*.jar'|xargs grep 'GroupRecord'
           filename=$(basename "$fullfilename")
           echo "::set-output name=date::$filename"
         
